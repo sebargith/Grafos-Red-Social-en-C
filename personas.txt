@@ -1,0 +1,31 @@
+10
+Alejandro Chile 29 0
+3 Pedro Juan Diego
+2 Cocina VideoJuegos
+Pedro Argentina 20 1
+2 Alejandro Diego
+1 VideoJuegos
+Juan Chile 25 0
+2 Alejandro Diego
+1 Cocina
+Diego Argentina 22 0
+1 Juan
+1 Cocina
+Maria Bolivia 30 0
+1 Juana
+2 Cocina VideoJuegos
+Juana Bolivia 31 1
+1 Maria
+1 VideoJuegos
+Constanza Argentina 25 1
+2 Pedro Marcela
+1 Videojuegos
+Marcela Chile 20 1
+1 Pedro
+2 VideoJuegos Cocina
+Cecilia Chile 25 0
+1 Mario
+1 Cocina
+Mario Chile 25 0
+1 Cecilia
+1 Cocina
