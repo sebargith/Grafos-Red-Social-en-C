@@ -137,10 +137,10 @@ void losquecocinan(){
     for (int i=0; i<NumeroDeComunidades; i++){
         printf("\nComunidad: %d\n", i+1);
         for (int j=0; j<comunidades[i].NumeroDeMiembros; j++){
-            int memberIndex = encontrarpersona(comunidades[i].miembros[j]);
-            if (memberIndex != -1){
-                for (int k=0; k<personas[memberIndex].NumeroDeIntereses; k++){
-                    if(strcmp(personas[memberIndex].Intereses[k], "Cocina") == 0){
+            int indicemiembro = encontrarpersona(comunidades[i].miembros[j]);
+            if (indicemiembro != -1){
+                for (int k=0; k<personas[indicemiembro].NumeroDeIntereses; k++){
+                    if(strcmp(personas[indicemiembro].Intereses[k], "Cocina") == 0){
                         printf(" -%s\n", comunidades[i].miembros[j]);
                         break;
                     }
@@ -149,16 +149,16 @@ void losquecocinan(){
         }
     }
 }
-
-void edadmaxima(){
-    printf("\nMayor a 25 y menor a 50\n");
+/*
+void filtroPorEdad(int edadminima, int edadmaxima){
+    printf("\nMayor a %d y menor a %d\n", edadminima, edadmaxima);
     for (int i=0; i<NumeroDeComunidades; i++){
         printf("\nComunidad: %d\n", i+1);
         for (int j=0; j<comunidades[i].NumeroDeMiembros; j++){
             //recorriendo las comunidades de otra forma para encontrar personas
             for (int k=0; k<NumeroDePersonas; k++){
                 if (strcmp(personas[k].nombre, comunidades[i].miembros[j]) == 0){  //recorre el array de personas y se fija si algun nombre coincide con el de miem[i]com[j], para ver si pertece a esa comunidad
-                    if(personas[k].edad >24 && personas[k].edad<51){
+                    if(personas[k].edad > edadminima -1 && personas[k].edad< edadmaxima +1){
                         printf(" -%s\n",comunidades[i].miembros[j]);
                     }
                 }              
@@ -168,10 +168,71 @@ void edadmaxima(){
     }
 }
 
+void filtroPorPais(const char* p) {
+    printf("\nDe: %s\n", p);
+    for (int i = 0; i < NumeroDeComunidades; i++) {
+        printf("\nComunidad: %d\n", i + 1);
+        for (int j = 0; j < comunidades[i].NumeroDeMiembros; j++) {
+            int indicemiembro = encontrarpersona(comunidades[i].miembros[j]);
+            if (indicemiembro != -1) {
+                if (strcmp(personas[indicemiembro].pais, p) == 0) {
+                    printf(" - %s\n", comunidades[i].miembros[j]);
+                }
+            }
+        }
+    }
+}
+*/
+
+
+
+void filtrarPersonas(const char* p, int edadminima,int edadmaxima, const char*hobby) {
+    printf("Filtrando personas:\n");
+
+    for (int i = 0; i < NumeroDeComunidades; i++) {
+        printf("\nComunidad: %d\n", i + 1);
+        for (int j = 0; j < comunidades[i].NumeroDeMiembros; j++) {
+            int indicemiembro = encontrarpersona(comunidades[i].miembros[j]);
+            if (indicemiembro != -1) {
+                //filtros
+
+
+
+                int FiltroPorPais = (strcmp(p, "-1") == 0) || (strcmp(personas[indicemiembro].pais, p) == 0);   //filtra el pais
+                int FiltroPorEdad = (personas[indicemiembro].edad > edadminima - 1 && personas[indicemiembro].edad < edadmaxima + 1);  //filtra la edad
+                if (strcmp(hobby, "-1") != 0){       //si se elige un interes, corre esto
+                    for (int k=0; k<personas[indicemiembro].NumeroDeIntereses; k++){
+                        for (int l = 0; l < personas[k].NumeroDeIntereses; l++) {
+                            if (strcmp(personas[k].Intereses[l], hobby) == 0) {
+                                if (FiltroPorPais && FiltroPorEdad){
+                                    printf(" - %s\n",comunidades[i].miembros[j]);
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+                else {        //sino no
+                    if (FiltroPorPais && FiltroPorEdad){
+                        printf(" - %s\n",comunidades[i].miembros[j]);
+                    }
+                }
+            }
+        }  
+    }
+}
+
+
 int main() {
+    char f[100];
+    char p[50];
+    int edadminima, edadmaxima;
+    char hobby[50];
+    //printf("Ingrese el nombre del archivo a leer: ");
+    //scanf("%s", f);
     FILE* file = fopen("personas.txt", "r");
     if (file == NULL) {
-        printf("No se pudo abrir personas.txt\n");
+        printf("No se pudo abrir el archivo\n");
         return 1;
     }
 
@@ -202,9 +263,35 @@ int main() {
     fclose(file);
 
     FormarComunidades();
+
+
+    printf("\nIngrese los criterios de busqueda\n");
+    printf("Ingrese el pais, (si no es importante ingrese -1): ");
+    scanf("%s", p);
+
+    printf("\nIngrese la edad minima (si no es importante ingrese 0): ");
+    scanf("%d",&edadminima);
+    printf("\nIngrese la edad maxima (si no es importante ingrese 120): ");
+    scanf("%d",&edadmaxima);
+    printf("Ingrese el interes, (si no es importante ingrese -1): ");
+    scanf("%s", hobby);
+    filtrarPersonas(p, edadminima, edadmaxima, hobby);
+
+    
+
+
+
+
+
+
+
+
+    /*
+    FormarComunidades();
     ImprimirComunidades();
     losquecocinan();
-    edadmaxima();
+    filtroPorEdad();
+    */
 
     return 0;
 }
