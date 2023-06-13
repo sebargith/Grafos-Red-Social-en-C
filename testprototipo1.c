@@ -121,6 +121,7 @@ void FormarComunidades() {
     }
 }
 
+/*
 void ImprimirComunidades() {
     for (int i = 0; i < NumeroDeComunidades; i++) {
         printf("Comunidad %d:\n", i + 1);
@@ -131,7 +132,7 @@ void ImprimirComunidades() {
     }
 }
 
-
+/*
 void losquecocinan(){
     printf("Los que cocinan son:\n");
     for (int i=0; i<NumeroDeComunidades; i++){
@@ -149,7 +150,7 @@ void losquecocinan(){
         }
     }
 }
-/*
+
 void filtroPorEdad(int edadminima, int edadmaxima){
     printf("\nMayor a %d y menor a %d\n", edadminima, edadmaxima);
     for (int i=0; i<NumeroDeComunidades; i++){
